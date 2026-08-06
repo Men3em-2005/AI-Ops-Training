@@ -14,14 +14,14 @@ A full-stack web app implementing the V1 PRD for BrightWay Retail Group: product
 ```bash
 npm install
 npx prisma generate
-npx prisma migrate dev
+npx prisma migrate deploy
 npx prisma db seed
 npm run dev
 ```
 
 Then open <http://localhost:3000> — it redirects to `/login`.
 
-> Prisma 7's `migrate dev` does **not** automatically regenerate the client — if you change `prisma/schema.prisma`, run `npx prisma generate` before `npx prisma db seed` or starting the app, or you'll see "column does not exist" errors.
+> Use `migrate deploy` (not `migrate dev`) to stand up the checked-in migrations — `migrate dev` also auto-runs the seed command on a fresh database, so pairing it with the explicit `db seed` step below double-seeds and leaves duplicate branch rows behind. Reach for `migrate dev` only when you're actively changing `prisma/schema.prisma` and want a new migration generated; if you do, run `npx prisma generate` again afterward (Prisma 7 doesn't do this automatically) before reseeding.
 
 ### Demo accounts
 
